@@ -102,13 +102,13 @@ def load_tokenizer(model_name, model):
     elif path_to_model.exists():
         try:
             tokenizer = AutoTokenizer.from_pretrained(
-                path_to_model,
+                shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
                 trust_remote_code=shared.args.trust_remote_code,
                 use_fast=False
             )
         except ValueError:
             tokenizer = AutoTokenizer.from_pretrained(
-                path_to_model,
+                shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
                 trust_remote_code=shared.args.trust_remote_code,
                 use_fast=True
             )
@@ -213,7 +213,8 @@ def huggingface_loader(model_name):
                 model,
                 dtype=torch.int8,
                 max_memory=params['max_memory'],
-                no_split_module_classes=model._no_split_modules
+                no_split_module_classes=model._no_split_modules,
+                variant=shared.args.variant
             )
 
         if shared.args.compress_pos_emb > 1:
