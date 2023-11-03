@@ -103,7 +103,7 @@ def load_tokenizer(model_name, model):
         tokenizer = AutoTokenizer.from_pretrained(
             shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
             trust_remote_code=shared.args.trust_remote_code,
-            use_fast=shared.args.use_fast
+            use_fast=shared.args.use_fast_tokenizer
         )
 
     if tokenizer.__class__.__name__ == 'LlamaTokenizer':

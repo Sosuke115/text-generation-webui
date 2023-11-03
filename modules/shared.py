@@ -109,7 +109,7 @@ parser.add_argument('--sdp-attention', action='store_true', help="Use torch 2.0'
 parser.add_argument('--trust-remote-code', action='store_true', help="Set trust_remote_code=True while loading a model. Necessary for ChatGLM and Falcon.")
 parser.add_argument('--tokenizer_name', type=str, default=None)
 parser.add_argument('--variant', type=str, default=None)
-parser.add_argument('--use_fast', action='store_true')
+parser.add_argument('--use_fast_tokenizer', action='store_true')
 
 # Accelerate 4-bit
 parser.add_argument('--load-in-4bit', action='store_true', help='Load the model with 4-bit precision (using bitsandbytes).')
