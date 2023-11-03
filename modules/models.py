@@ -164,7 +164,8 @@ def huggingface_loader(model_name):
     else:
         params = {
             "low_cpu_mem_usage": True,
-            "trust_remote_code": shared.args.trust_remote_code
+            "trust_remote_code": shared.args.trust_remote_code,
+            "variant": shared.args.variant
         }
 
         if not any((shared.args.cpu, torch.cuda.is_available(), torch.backends.mps.is_available())):
@@ -213,8 +214,7 @@ def huggingface_loader(model_name):
                 model,
                 dtype=torch.int8,
                 max_memory=params['max_memory'],
-                no_split_module_classes=model._no_split_modules,
-                variant=shared.args.variant
+                no_split_module_classes=model._no_split_modules
             )
 
         if shared.args.compress_pos_emb > 1:
