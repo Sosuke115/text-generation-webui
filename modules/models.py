@@ -100,18 +100,11 @@ def load_tokenizer(model_name, model):
     if any(s in model_name.lower() for s in ['gpt-4chan', 'gpt4chan']) and Path(f"{shared.args.model_dir}/gpt-j-6B/").exists():
         tokenizer = AutoTokenizer.from_pretrained(Path(f"{shared.args.model_dir}/gpt-j-6B/"))
     elif path_to_model.exists():
-        try:
-            tokenizer = AutoTokenizer.from_pretrained(
-                shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
-                trust_remote_code=shared.args.trust_remote_code,
-                use_fast=False
-            )
-        except ValueError:
-            tokenizer = AutoTokenizer.from_pretrained(
-                shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
-                trust_remote_code=shared.args.trust_remote_code,
-                use_fast=True
-            )
+        tokenizer = AutoTokenizer.from_pretrained(
+            shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
+            trust_remote_code=shared.args.trust_remote_code,
+            use_fast=shared.args.use_fast
+        )
 
     if tokenizer.__class__.__name__ == 'LlamaTokenizer':
         pairs = [
