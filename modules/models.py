@@ -100,6 +100,7 @@ def load_tokenizer(model_name, model):
     if any(s in model_name.lower() for s in ['gpt-4chan', 'gpt4chan']) and Path(f"{shared.args.model_dir}/gpt-j-6B/").exists():
         tokenizer = AutoTokenizer.from_pretrained(Path(f"{shared.args.model_dir}/gpt-j-6B/"))
     elif path_to_model.exists():
+        import sentencepiece
         tokenizer = AutoTokenizer.from_pretrained(
             shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
             trust_remote_code=shared.args.trust_remote_code,
