@@ -3,24 +3,21 @@ fastapi==0.95.2
 gradio_client==0.2.5
 gradio==3.33.1
 
-bitsandbytes==0.40.0
-# accelerate==0.22.*
+accelerate==0.22.*
 colorama
 datasets
 einops
 markdown
 numpy==1.24
 pandas
-# peft==0.5.*
+peft==0.5.*
 Pillow>=9.5.0
 pyyaml
 requests
 safetensors==0.3.2
 transformers==4.34.0
-peft==0.4.0
 scipy
 sentencepiece==0.1.99
-accelerate==0.21.0
 tensorboard
 tqdm
 wandb
