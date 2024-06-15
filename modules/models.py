@@ -100,18 +100,12 @@ def load_tokenizer(model_name, model):
     if any(s in model_name.lower() for s in ['gpt-4chan', 'gpt4chan']) and Path(f"{shared.args.model_dir}/gpt-j-6B/").exists():
         tokenizer = AutoTokenizer.from_pretrained(Path(f"{shared.args.model_dir}/gpt-j-6B/"))
     elif path_to_model.exists():
-        try:
-            tokenizer = AutoTokenizer.from_pretrained(
-                path_to_model,
-                trust_remote_code=shared.args.trust_remote_code,
-                use_fast=False
-            )
-        except ValueError:
-            tokenizer = AutoTokenizer.from_pretrained(
-                path_to_model,
-                trust_remote_code=shared.args.trust_remote_code,
-                use_fast=True
-            )
+        import sentencepiece
+        tokenizer = AutoTokenizer.from_pretrained(
+            shared.args.tokenizer_name if shared.args.tokenizer_name else path_to_model,
+            trust_remote_code=shared.args.trust_remote_code,
+            use_fast=shared.args.use_fast_tokenizer
+        )
 
     if tokenizer.__class__.__name__ == 'LlamaTokenizer':
         pairs = [
@@ -164,7 +158,8 @@ def huggingface_loader(model_name):
     else:
         params = {
             "low_cpu_mem_usage": True,
-            "trust_remote_code": shared.args.trust_remote_code
+            "trust_remote_code": shared.args.trust_remote_code,
+            "variant": shared.args.variant
         }
 
         if not any((shared.args.cpu, torch.cuda.is_available(), torch.backends.mps.is_available())):
